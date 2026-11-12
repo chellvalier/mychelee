@@ -42,7 +42,7 @@ public class LoginForm extends javax.swing.JFrame {
 
         jLabel3.setText("Password");
 
-        jButton1.setText("SUBMIT");
+        jButton1.setText("LOGIN");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -93,7 +93,7 @@ public class LoginForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         
         String username = txtUname.getText().trim();
     String password = txtPass.getText().trim();
@@ -105,7 +105,7 @@ public class LoginForm extends javax.swing.JFrame {
         return;
     }
 
-    String url = "jdbc:mysql://localhost:3307/pengguna";
+    String url = "jdbc:mysql://localhost:3306/laundritify";
 
     try (
         java.sql.Connection conn =

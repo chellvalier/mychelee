@@ -13,14 +13,14 @@ public class main {
 
         javax.swing.SwingUtilities.invokeLater(() -> {
 
-            LoginForm login = new LoginForm();
+            RegisterForm register = new RegisterForm();
 
-            login.setTitle("Login");
-            login.setDefaultCloseOperation(
+            register.setTitle("Register");
+            register.setDefaultCloseOperation(
                 javax.swing.JFrame.EXIT_ON_CLOSE
             );
-            login.setLocationRelativeTo(null);
-            login.setVisible(true);
+            register.setLocationRelativeTo(null);
+            register.setVisible(true);
 
         });
     }   
