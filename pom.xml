@@ -13,7 +13,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <exec.mainClass>com.freshfold.LoginForm</exec.mainClass>
+        <exec.mainClass>com.freshfold.main</exec.mainClass>
     </properties>
 
     <dependencies>
