@@ -47,17 +47,12 @@
                                   <Component id="email" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
                                   <Component id="no_hp" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
                                   <Component id="alamat" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="txtUname" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
-                                          <Component id="nama_lengkap" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="txtUname" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
+                                  <Component id="nama_lengkap" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>

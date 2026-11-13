@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.freshfold;
-
+import com.freshfold.dao.PenggunaDAO;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import javax.swing.JOptionPane;
 /**
  *
  * @author THINKPAD
@@ -234,54 +236,64 @@ public class RegisterForm extends javax.swing.JFrame {
             return;
         }
         
-        String url = "jdbc:mysql://localhost:3306/laundritify";
+        try {
+            Integer noHp = Integer.valueOf(nomorHp);
+            try (AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(SpringConfig.class)) {
+                
+                PenggunaDAO dao = context.getBean(PenggunaDAO.class);
+                
+                if (dao.findByUsername(username) != null) {
+                    JOptionPane.showMessageDialog(
+                        this, "Username sudah digunakan!"
+                    );
+                    return;
+                }
+                
+                Pengguna pengguna = new Pengguna (
+                        nama,
+                        username,
+                        password,
+                        emailUser,
+                        noHp,
+                        alamatUser
+                );
+                dao.save(pengguna);
+        }
         
-        try (
-                java.sql.Connection conn = java.sql.DriverManager.getConnection(url, "root", "");
-                java.sql.PreparedStatement ps = conn.prepareStatement(
-                "INSERT INTO pengguna " + "(nama_lengkap, username, password, email, nomor_hp, alamat) " + "VALUES (?, ?, ?, ?, ?, ?)"
-                )
-        ){
-            ps.setString(1, nama);
-            ps.setString(2, username);
-            ps.setString(3, password);
-            ps.setString(4, emailUser);
-            ps.setString(5, nomorHp);
-            ps.setString(6, alamatUser);
-
-            ps.executeUpdate();
-
-            int pilihan = javax.swing.JOptionPane.showConfirmDialog(
-            this, "Selamat! Akun kamu berhasil didaftarkan.\n"
-            + "Apakah kamu ingin login sekarang?",
-            "Registrasi Berhasil",
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.INFORMATION_MESSAGE
-            );
-            if (pilihan == javax.swing.JOptionPane.YES_OPTION) {
-                LoginForm login = new LoginForm();
-                login.setVisible(true);
-                this.dispose();
-            } else {
-                nama_lengkap.setText("");
-                txtUname.setText("");
-                txtPass.setText("");
-                konfirm_pass.setText("");
-                email.setText("");
-                no_hp.setText("");
-                alamat.setText("");
-            }
+        int pilihan = JOptionPane.showConfirmDialog(
+            this,
+                "Registrasi berhasil! Apakah Anda ingin login sekarang?", 
+                "Registrasi Berhasil",  
+                JOptionPane.YES_NO_OPTION
+        );
+        
+        if (pilihan == JOptionPane.YES_OPTION) {
+            LoginForm login = new LoginForm();
+            login.setLocationRelativeTo(null);
+            login.setVisible(true);
+            this.dispose();
+        } else {
+            nama_lengkap.setText("");
+            txtUname.setText("");
+            txtPass.setText("");
+            konfirm_pass.setText("");
+            email.setText("");
+            no_hp.setText("");
+            alamat.setText("");
+        }        
             
-        } catch (java.sql.SQLException e) { 
-            if ("23000".equals(e.getSQLState())) {
-                javax.swing.JOptionPane.showMessageDialog(
-                        this, "Username atau data sudah terdaftar!"
-                );
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(
-                        this, "Pendaftaran gagal: " + e.getMessage()
-                );
-            }
+    } catch (NumberFormatException e) { 
+            JOptionPane.showMessageDialog(
+                this, "Nomor HP harus berupa angka!"
+            );
+            
+        } catch (Exception e) { 
+            JOptionPane.showMessageDialog(
+                    this,"Registrasi gagal! Periksa kembali data Anda.\n"
+                    + e.getMessage()
+            );
+            e.printStackTrace();
         }
     }//GEN-LAST:event_tombol_daftarActionPerformed
 
