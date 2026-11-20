@@ -237,7 +237,6 @@ public class RegisterForm extends javax.swing.JFrame {
         }
         
         try {
-            Integer noHp = Integer.valueOf(nomorHp);
             try (AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(SpringConfig.class)) {
                 
@@ -255,7 +254,7 @@ public class RegisterForm extends javax.swing.JFrame {
                         username,
                         password,
                         emailUser,
-                        noHp,
+                        nomorHp,
                         alamatUser
                 );
                 dao.save(pengguna);
@@ -282,11 +281,6 @@ public class RegisterForm extends javax.swing.JFrame {
             no_hp.setText("");
             alamat.setText("");
         }        
-            
-    } catch (NumberFormatException e) { 
-            JOptionPane.showMessageDialog(
-                this, "Nomor HP harus berupa angka!"
-            );
             
         } catch (Exception e) { 
             JOptionPane.showMessageDialog(

@@ -23,8 +23,8 @@ public class Pengguna {
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @Column(name = "nomor_hp", nullable = false)
-    private Integer nomorHp;
+    @Column(name = "nomor_hp", nullable = false, length = 20)
+    private String nomorHp;
 
     @Column(name = "alamat", nullable = false, columnDefinition = "TEXT")
     private String alamat;
@@ -34,7 +34,7 @@ public class Pengguna {
 
     public Pengguna(String namaLengkap, String username,
                     String password, String email,
-                    Integer nomorHp, String alamat) {
+                    String nomorHp, String alamat) {
         this.namaLengkap = namaLengkap;
         this.username = username;
         this.password = password;
@@ -83,11 +83,11 @@ public class Pengguna {
         this.email = email;
     }
 
-    public Integer getNomorHp() {
+    public String getNomorHp() {
         return nomorHp;
     }
 
-    public void setNomorHp(Integer nomorHp) {
+    public void setNomorHp(String nomorHp) {
         this.nomorHp = nomorHp;
     }
 
