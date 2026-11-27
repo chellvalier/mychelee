@@ -15,6 +15,10 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
+        
+        setTitle("Login - Laundritify");
+        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -121,8 +125,20 @@ public class LoginForm extends javax.swing.JFrame {
         try (java.sql.ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 javax.swing.JOptionPane.showMessageDialog(
-                    this, "Login berhasil! Selamat datang, " + username
+        this, "Login berhasil! Selamat datang, " + username
                 );
+
+            LandingPage landing = new LandingPage(true);
+            landing.setDefaultCloseOperation(
+        javax.swing.JFrame.EXIT_ON_CLOSE
+            );
+
+            landing.setExtendedState(
+        javax.swing.JFrame.MAXIMIZED_BOTH
+        );
+
+        landing.setVisible(true);
+        this.dispose();
             } else {
                 javax.swing.JOptionPane.showMessageDialog(
                     this, "Username atau password salah!"

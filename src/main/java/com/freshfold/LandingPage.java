@@ -5,6 +5,12 @@
 package com.freshfold;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  *
@@ -15,9 +21,21 @@ public class LandingPage extends javax.swing.JFrame {
     /**
      * Creates new form LandingPage
      */
-    public LandingPage() {
-        initComponents();
-        ImageIcon icon = new ImageIcon(
+private boolean sudahLogin = false;
+public LandingPage(boolean sudahLogin) {
+    this();
+
+    this.sudahLogin = sudahLogin;
+
+    if (sudahLogin) {
+        jButton1.setText("LOG OUT");
+    }
+}
+
+public LandingPage() {
+    initComponents();
+
+    ImageIcon icon = new ImageIcon(
         getClass().getResource("/images/laundry1.png")
     );
 
@@ -27,8 +45,317 @@ public class LandingPage extends javax.swing.JFrame {
 
     lblHeroImage.setIcon(new ImageIcon(img));
 
+    setupScrollPane();
+    aturNavbarLayout();
+    aturHeroLayout();
+    aturServicesLayout();
+    aturAdvantagesLayout();
+
     setSize(1000, 750);
     setLocationRelativeTo(null);
+}
+
+private void setupScrollPane() {
+
+    JPanel contentPanel = new JPanel();
+    contentPanel.setLayout(
+        new javax.swing.BoxLayout(
+            contentPanel,
+            javax.swing.BoxLayout.Y_AXIS
+        )
+    );
+
+    pnlHero.setPreferredSize(new Dimension(1000, 450));
+    pnlHero.setMaximumSize(
+        new Dimension(Integer.MAX_VALUE, 450)
+    );
+
+    pnlServices.setPreferredSize(new Dimension(1000, 300));
+    pnlServices.setMaximumSize(
+        new Dimension(Integer.MAX_VALUE, 300)
+    );
+
+    pnlAdvantages.setPreferredSize(new Dimension(1000, 250));
+    pnlAdvantages.setMaximumSize(
+        new Dimension(Integer.MAX_VALUE, 250)
+    );
+
+    jPanel1.setPreferredSize(new Dimension(1000, 192));
+    jPanel1.setMaximumSize(
+        new Dimension(Integer.MAX_VALUE, 192)
+    );
+
+    contentPanel.add(pnlHero);
+    contentPanel.add(pnlServices);
+    contentPanel.add(pnlAdvantages);
+    contentPanel.add(jPanel1);
+
+    JScrollPane scrollPane = new JScrollPane(contentPanel);
+
+    scrollPane.setVerticalScrollBarPolicy(
+        JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+    );
+
+    scrollPane.setHorizontalScrollBarPolicy(
+        JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+    );
+
+    scrollPane.setBorder(null);
+
+    pnlNavbar.setPreferredSize(new Dimension(1000, 80));
+
+    getContentPane().removeAll();
+    getContentPane().setLayout(new BorderLayout());
+
+    getContentPane().add(pnlNavbar, BorderLayout.NORTH);
+    getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+    revalidate();
+    repaint();
+}
+
+
+private void aturNavbarLayout() {
+
+    pnlNavbar.setLayout(null);
+
+    pnlNavbar.addComponentListener(new ComponentAdapter() {
+        @Override
+        public void componentResized(ComponentEvent e) {
+
+            int width = pnlNavbar.getWidth();
+            int y = 22;
+
+            // Logo di sebelah kiri
+            lblLogo.setBounds(30, y, 250, 35);
+
+            // Tombol Sign In di sebelah kanan
+            int buttonWidth = 90;
+            int buttonX = width - 40 - buttonWidth;
+
+            jButton1.setBounds(
+                buttonX, y, buttonWidth, 32
+            );
+
+            // Menu navigasi
+            lblProfil.setBounds(
+                buttonX - 65, y, 50, 32
+            );
+
+            lblTentang.setBounds(
+                buttonX - 195, y, 115, 32
+            );
+
+            lblLayanan.setBounds(
+                buttonX - 290, y, 80, 32
+            );
+
+            lblBeranda.setBounds(
+                buttonX - 380, y, 75, 32
+            );
+
+            // Meratakan teks menu
+            lblBeranda.setHorizontalAlignment(
+                javax.swing.SwingConstants.CENTER
+            );
+
+            lblLayanan.setHorizontalAlignment(
+                javax.swing.SwingConstants.CENTER
+            );
+
+            lblTentang.setHorizontalAlignment(
+                javax.swing.SwingConstants.CENTER
+            );
+
+            lblProfil.setHorizontalAlignment(
+                javax.swing.SwingConstants.CENTER
+            );
+
+            pnlNavbar.revalidate();
+            pnlNavbar.repaint();
+        }
+    });
+}
+
+private void aturHeroLayout() {
+
+    pnlHero.setLayout(null);
+
+    pnlHero.addComponentListener(new ComponentAdapter() {
+        @Override
+        public void componentResized(ComponentEvent e) {
+
+            int width = pnlHero.getWidth();
+
+            // Posisi teks di sebelah kiri
+            lblGreeting.setBounds(
+                (int)(width * 0.05), 110, 350, 25
+            );
+
+            lblHeroTitle.setBounds(
+                (int)(width * 0.05), 145, 450, 50
+            );
+
+            lblHeroDesc.setBounds(
+                (int)(width * 0.05), 205, 450, 35
+            );
+
+            btnPesanSekarang.setBounds(
+                (int)(width * 0.05), 285, 150, 40
+            );
+
+            // Posisi gambar di sebelah kanan
+            int imageSize = 350;
+
+            lblHeroImage.setBounds(
+                (int)(width * 0.62), 50,
+                imageSize, imageSize
+            );
+
+            pnlHero.revalidate();
+            pnlHero.repaint();
+        }
+    });
+}
+
+
+private void aturServicesLayout() {
+
+    pnlServices.setLayout(null);
+
+    pnlServices.addComponentListener(new ComponentAdapter() {
+        @Override
+        public void componentResized(ComponentEvent e) {
+
+            int width = pnlServices.getWidth();
+
+            // Judul dan deskripsi di tengah
+            lblServicesTitle.setBounds(
+                0, 30, width, 35
+            );
+
+            lblServicesDesc.setBounds(
+                0, 70, width, 30
+            );
+
+            lblServicesTitle.setHorizontalAlignment(
+                javax.swing.SwingConstants.CENTER
+            );
+
+            lblServicesDesc.setHorizontalAlignment(
+                javax.swing.SwingConstants.CENTER
+            );
+
+            // Mengatur posisi kartu layanan
+            int cardWidth = 176;
+            int cardHeight = 148;
+            int gap = 54;
+
+            int totalWidth = (cardWidth * 3) + (gap * 2);
+            int startX = (width - totalWidth) / 2;
+
+            pnlKiloan.setBounds(
+                startX, 130, cardWidth, cardHeight
+            );
+
+            pnlExpress.setBounds(
+                startX + cardWidth + gap, 130,
+                cardWidth, cardHeight
+            );
+
+            pnlBedcover.setBounds(
+                startX + (cardWidth + gap) * 2, 130,
+                cardWidth, cardHeight
+            );
+
+            pnlServices.revalidate();
+            pnlServices.repaint();
+        }
+    });
+}
+
+
+
+private void aturAdvantagesLayout() {
+
+    pnlAdvantages.setLayout(null);
+
+    pnlAdvantages.addComponentListener(new ComponentAdapter() {
+        @Override
+        public void componentResized(ComponentEvent e) {
+
+            int width = pnlAdvantages.getWidth();
+
+            // Judul utama
+            lblAdvantagesTitle.setBounds(
+                0, 30, width, 40
+            );
+
+            lblAdvantagesTitle.setHorizontalAlignment(
+                javax.swing.SwingConstants.CENTER
+            );
+
+            // Pengaturan tiga kolom
+            int margin = (int)(width * 0.06);
+            int gap = 30;
+
+            int columnWidth =
+                (width - (2 * margin) - (2 * gap)) / 3;
+
+            int titleY = 105;
+            int descY = 145;
+
+            // Kolom pertama
+            lblAdvantage1.setBounds(
+                margin, titleY, columnWidth, 35
+            );
+
+            lblAdvantageDesc1.setBounds(
+                margin, descY, columnWidth, 45
+            );
+
+            // Kolom kedua
+            lblAdvantage2.setBounds(
+                margin + columnWidth + gap,
+                titleY, columnWidth, 35
+            );
+
+            lblAdvantageDesc2.setBounds(
+                margin + columnWidth + gap,
+                descY, columnWidth, 45
+            );
+
+            // Kolom ketiga
+            lblAdvantage3.setBounds(
+                margin + (columnWidth + gap) * 2,
+                titleY, columnWidth, 35
+            );
+
+            lblAdvantageDesc3.setBounds(
+                margin + (columnWidth + gap) * 2,
+                descY, columnWidth, 45
+            );
+
+            // Semua teks rata tengah
+            javax.swing.JLabel[] labels = {
+                lblAdvantage1,
+                lblAdvantage2,
+                lblAdvantage3,
+                lblAdvantageDesc1,
+                lblAdvantageDesc2,
+                lblAdvantageDesc3
+            };
+
+            for (javax.swing.JLabel label : labels) {
+                label.setHorizontalAlignment(
+                    javax.swing.SwingConstants.CENTER
+                );
+            }
+
+            pnlAdvantages.revalidate();
+            pnlAdvantages.repaint();
+        }
+    });
 }
 
     /**
@@ -46,6 +373,7 @@ public class LandingPage extends javax.swing.JFrame {
         lblLayanan = new javax.swing.JLabel();
         lblTentang = new javax.swing.JLabel();
         lblProfil = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         pnlHero = new javax.swing.JPanel();
         lblGreeting = new javax.swing.JLabel();
         lblHeroTitle = new javax.swing.JLabel();
@@ -83,7 +411,6 @@ public class LandingPage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1000, 750));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlNavbar.setBackground(new java.awt.Color(255, 255, 255));
@@ -108,6 +435,16 @@ public class LandingPage extends javax.swing.JFrame {
         lblProfil.setForeground(new java.awt.Color(82, 98, 115));
         lblProfil.setText("Profil");
 
+        jButton1.setBackground(new java.awt.Color(85, 88, 217));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("SIGN IN");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlNavbarLayout = new javax.swing.GroupLayout(pnlNavbar);
         pnlNavbar.setLayout(pnlNavbarLayout);
         pnlNavbarLayout.setHorizontalGroup(
@@ -115,7 +452,7 @@ public class LandingPage extends javax.swing.JFrame {
             .addGroup(pnlNavbarLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(lblLogo)
-                .addGap(265, 265, 265)
+                .addGap(196, 196, 196)
                 .addComponent(lblBeranda)
                 .addGap(18, 18, 18)
                 .addComponent(lblLayanan)
@@ -123,7 +460,9 @@ public class LandingPage extends javax.swing.JFrame {
                 .addComponent(lblTentang)
                 .addGap(18, 18, 18)
                 .addComponent(lblProfil)
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         pnlNavbarLayout.setVerticalGroup(
             pnlNavbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,68 +473,41 @@ public class LandingPage extends javax.swing.JFrame {
                     .addComponent(lblBeranda)
                     .addComponent(lblLayanan)
                     .addComponent(lblTentang)
-                    .addComponent(lblProfil))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(lblProfil)
+                    .addComponent(jButton1))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnlNavbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 80));
 
         pnlHero.setBackground(new java.awt.Color(234, 245, 255));
+        pnlHero.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblGreeting.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblGreeting.setForeground(new java.awt.Color(36, 91, 133));
         lblGreeting.setText("WELCOME TO LAUNDRITIFY");
+        pnlHero.add(lblGreeting, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 95, -1, -1));
 
         lblHeroTitle.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         lblHeroTitle.setForeground(new java.awt.Color(36, 55, 70));
         lblHeroTitle.setText("Laundry made Easy!");
+        pnlHero.add(lblHeroTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 117, -1, -1));
 
         lblHeroDesc.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblHeroDesc.setForeground(new java.awt.Color(82, 98, 115));
         lblHeroDesc.setText("Solusi praktis untuk kebutuhan Laundry anda.");
+        pnlHero.add(lblHeroDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 161, -1, -1));
 
         lblHeroImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHeroImage.setPreferredSize(new java.awt.Dimension(350, 350));
+        pnlHero.add(lblHeroImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(354, 28, -1, -1));
 
         btnPesanSekarang.setBackground(new java.awt.Color(36, 91, 133));
         btnPesanSekarang.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         btnPesanSekarang.setForeground(new java.awt.Color(255, 255, 255));
         btnPesanSekarang.setText("Pesan Sekarang");
         btnPesanSekarang.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        javax.swing.GroupLayout pnlHeroLayout = new javax.swing.GroupLayout(pnlHero);
-        pnlHero.setLayout(pnlHeroLayout);
-        pnlHeroLayout.setHorizontalGroup(
-            pnlHeroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeroLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(pnlHeroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblHeroTitle)
-                    .addComponent(lblGreeting)
-                    .addComponent(lblHeroDesc)
-                    .addComponent(btnPesanSekarang))
-                .addGap(46, 46, 46)
-                .addComponent(lblHeroImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(296, Short.MAX_VALUE))
-        );
-        pnlHeroLayout.setVerticalGroup(
-            pnlHeroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeroLayout.createSequentialGroup()
-                .addGroup(pnlHeroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlHeroLayout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(lblGreeting)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblHeroTitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblHeroDesc)
-                        .addGap(81, 81, 81)
-                        .addComponent(btnPesanSekarang))
-                    .addGroup(pnlHeroLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(lblHeroImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(72, Short.MAX_VALUE))
-        );
+        pnlHero.add(btnPesanSekarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 262, -1, -1));
 
         getContentPane().add(pnlHero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 1000, 450));
 
@@ -496,6 +808,32 @@ public class LandingPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (sudahLogin) {
+            int pilihan = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Apakah Anda yakin ingin logout?",
+            "Konfirmasi Logout",
+            javax.swing.JOptionPane.YES_NO_OPTION
+            );
+
+        if (pilihan == javax.swing.JOptionPane.YES_OPTION) {
+            new LandingPage(false).setVisible(true);
+            this.dispose();
+        }
+
+    } else {
+        RegisterForm register = new RegisterForm();
+        register.setTitle("Register - Laundritify");
+        register.setExtendedState(
+            javax.swing.JFrame.MAXIMIZED_BOTH
+        );
+        register.setVisible(true);
+
+        this.dispose();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -533,6 +871,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPesanSekarang;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
